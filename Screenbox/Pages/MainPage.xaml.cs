@@ -2,13 +2,19 @@
 
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Screenbox.Core;
+using Screenbox.Core.Enums;
 using Screenbox.Core.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
+using Windows.Devices.Custom;
+using Windows.Devices.Enumeration;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -16,6 +22,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using muxc = Microsoft.UI.Xaml.Controls;
 
@@ -33,14 +40,19 @@ namespace Screenbox.Pages
 
         private readonly Dictionary<string, Type> _pages;
 
+        private readonly ObservableCollection<DeviceViewModel> _connectedDevices;
+
         public MainPage()
         {
             InitializeComponent();
+
             CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             LeftPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayLeftInset);
             RightPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayRightInset);
             coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
             NotificationView.Translation = new Vector3(0, 0, 8);
+
+            _connectedDevices = new();
 
             _pages = new Dictionary<string, Type>
             {
@@ -49,6 +61,7 @@ namespace Screenbox.Pages
                 { "music", typeof(MusicPage) },
                 { "queue", typeof(PlayQueuePage) },
                 { "network", typeof(NetworkPage) },
+                { "devices", typeof(SettingsPage) },
                 { "settings", typeof(SettingsPage) }
             };
 
@@ -94,7 +107,7 @@ namespace Screenbox.Pages
             }
         }
 
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             Window.Current.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
             SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
@@ -104,6 +117,26 @@ namespace Screenbox.Pages
             {
                 SetTitleBar();
                 NavView.SelectedItem = NavView.MenuItems[0];
+            }
+
+            await StartScanForDevicesAsync();
+        }
+
+        private async Task StartScanForDevicesAsync()
+        {
+            var folders = await KnownFolders.RemovableDevices.GetFoldersAsync();
+
+            foreach (var item in folders)
+            {
+                _connectedDevices.Add(new(DeviceType.CdRom, item.DisplayName));
+                DevicesItem.MenuItems.Add(new Microsoft.UI.Xaml.Controls.NavigationViewItem()
+                {
+                    Content = item.DisplayName,
+                    Icon = new FontIcon()
+                    {
+                        Glyph = "\uE958"
+                    }
+                });
             }
         }
 

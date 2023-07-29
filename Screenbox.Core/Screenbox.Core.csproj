@@ -127,6 +127,7 @@
     <Compile Include="Common\IPropertiesDialog.cs" />
     <Compile Include="Common\IVlcLoginDialog.cs" />
     <Compile Include="Common\NavigationMetadata.cs" />
+    <Compile Include="Enums\DeviceType.cs" />
     <Compile Include="Enums\ResourceName.cs" />
     <Compile Include="Enums\ManipulationLock.cs" />
     <Compile Include="Enums\NotificationLevel.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="ViewModels\CastControlViewModel.cs" />
     <Compile Include="ViewModels\ChapterViewModel.cs" />
     <Compile Include="ViewModels\CommonViewModel.cs" />
+    <Compile Include="ViewModels\DeviceViewModel.cs" />
     <Compile Include="ViewModels\FolderListViewPageViewModel.cs" />
     <Compile Include="ViewModels\FolderViewPageViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />

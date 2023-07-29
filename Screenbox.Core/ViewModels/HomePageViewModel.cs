@@ -43,6 +43,8 @@ namespace Screenbox.Core.ViewModels
 
             // Activate the view model's messenger
             IsActive = true;
+
+            Messenger.Send(new PlayMediaMessage(new Uri("cdda:///K:/")));
         }
 
         public async void Receive(PlaylistActiveItemChangedMessage message)

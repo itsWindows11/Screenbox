@@ -12,7 +12,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:services="using:Screenbox.Core.Services"
-    xmlns:strings="using:Screenbox.Strings"
+    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+    xmlns:strings="using:Screenbox.Strings" xmlns:viewmodels="using:Screenbox.Core.ViewModels"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     Loaded="MainPage_Loaded"
     mc:Ignorable="d">
@@ -135,6 +136,16 @@
                     Content="{x:Bind strings:Resources.PlayQueue}"
                     Icon="MusicInfo"
                     Tag="queue" />
+                <muxc:NavigationViewItemSeparator />
+                <muxc:NavigationViewItem
+                    x:Name="DevicesItem"
+                    Content="Devices"
+                    Icon="{ui:FontIcon Glyph=&#xE955;}"
+                    Tag="devices">
+                    <muxc:NavigationViewItem.MenuItems>
+                        <muxc:NavigationViewItem Visibility="Collapsed" />
+                    </muxc:NavigationViewItem.MenuItems>
+                </muxc:NavigationViewItem>
             </muxc:NavigationView.MenuItems>
             <muxc:NavigationView.AutoSuggestBox>
                 <AutoSuggestBox
