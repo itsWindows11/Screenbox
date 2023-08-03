@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Toolkit.Uwp.UI;
 using Screenbox.Core.ViewModels;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -51,11 +52,6 @@ namespace Screenbox.Pages
             {
                 Common.TryRestoreScrollingStateOnce(ArtistGridView, this);
             }
-        }
-
-        private void ArtistGridView_OnContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
-        {
-            // TODO: Load artist image from the internet
         }
     }
 }

@@ -7,12 +7,15 @@ using Screenbox.Core;
 using Screenbox.Core.Common;
 using Screenbox.Core.Factories;
 using Screenbox.Core.Messages;
+using Screenbox.Core.Providers;
+using Screenbox.Core.Providers.Impl;
 using Screenbox.Core.Services;
 using Screenbox.Core.ViewModels;
 using Screenbox.Pages;
 using Screenbox.Services;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -124,6 +127,18 @@ namespace Screenbox
                 new KeyValuePair<Type, Type>(typeof(FolderViewPageViewModel), typeof(FolderViewPage)),
                 new KeyValuePair<Type, Type>(typeof(FolderListViewPageViewModel), typeof(FolderListViewPage))
             ));
+
+            services.AddSingleton((_) =>
+            {
+                HttpClient httpClient = new();
+
+                httpClient.DefaultRequestHeaders.UserAgent.Add(new("Screenbox", "1.0.0"));
+
+                return httpClient;
+            });
+
+            // Providers
+            services.AddSingleton<IArtistInfoProvider, MusicBrainzArtistInfoProvider>();
 
             return services.BuildServiceProvider();
         }

@@ -45,7 +45,6 @@
                     Padding="{StaticResource ContentPageThumbnailRightMargin}"
                     ui:ListViewExtensions.Command="{x:Bind Common.OpenArtistCommand}"
                     ui:ScrollViewerExtensions.VerticalScrollBarMargin="{x:Bind Common.ScrollBarMargin, Mode=OneWay}"
-                    ContainerContentChanging="ArtistGridView_OnContainerContentChanging"
                     IsItemClickEnabled="True"
                     ItemTemplate="{StaticResource ArtistGridViewItemTemplate}"
                     ItemsSource="{x:Bind ArtistsSource.View}"

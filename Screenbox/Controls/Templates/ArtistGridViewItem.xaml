@@ -18,7 +18,6 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid
-                Grid.Row="0"
                 Height="{StaticResource ArtistGridViewItemThumbnailHeight}"
                 Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                 BorderBrush="{ThemeResource ControlElevationBorderBrush}"
@@ -29,14 +28,13 @@
                     VerticalAlignment="Center"
                     FontSize="52"
                     Foreground="{ThemeResource ThumbnailMediaIconForeground}"
-                    Glyph="&#xe77b;" />
-                <!--<Border CornerRadius="4">
-                        <Image
-                            HorizontalAlignment="Center"
-                            x:Phase="1"
-                            Source="{x:Bind RelatedSongs[0].Thumbnail, Mode=OneWay, FallbackValue={x:Null}}"
-                            Stretch="UniformToFill" />
-                    </Border>-->
+                    Glyph="&#xE77B;" />
+                <Border>
+                    <Image
+                        HorizontalAlignment="Center"
+                        Source="{Binding GetImageCommand.ExecutionTask, Converter={StaticResource TaskResultConverter}}"
+                        Stretch="UniformToFill" />
+                </Border>
             </Grid>
 
             <TextBlock

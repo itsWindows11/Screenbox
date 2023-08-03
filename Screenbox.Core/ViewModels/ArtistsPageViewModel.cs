@@ -41,6 +41,11 @@ namespace Screenbox.Core.ViewModels
             // No need to run fetch async. HomePageViewModel should already called the method.
             MusicLibraryFetchResult musicLibrary = _libraryService.GetMusicFetchResult();
 
+            foreach (ArtistViewModel artist in musicLibrary.Artists)
+            {
+                artist.GetImageCommand?.Execute(null);
+            }
+
             IEnumerable<IGrouping<string, ArtistViewModel>> groupings = musicLibrary.Artists
                 .OrderBy(a => a.Name, StringComparer.CurrentCulture)
                 .GroupBy(artist => artist == musicLibrary.UnknownArtist

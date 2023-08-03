@@ -80,6 +80,7 @@ namespace Screenbox.Core.Factories
             string key = artistName.Trim().ToLower(CultureInfo.CurrentUICulture);
             artist = new ArtistViewModel(artistName);
             artist.RelatedSongs.Add(song);
+
             return _allArtists[key] = artist;
         }
     }

@@ -1,8 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
+using Screenbox.Core.Providers;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Screenbox.Core.ViewModels
 {
-    public sealed class ArtistViewModel
+    public sealed partial class ArtistViewModel
     {
         public List<MediaViewModel> RelatedSongs { get; }
 
@@ -18,6 +23,10 @@ namespace Screenbox.Core.ViewModels
         {
             Name = artist;
         }
+
+        [RelayCommand]
+        public Task<string> GetImageAsync()
+            => Ioc.Default.GetRequiredService<IArtistInfoProvider>().GetImageUriAsync(this);
 
         public override string ToString()
         {
